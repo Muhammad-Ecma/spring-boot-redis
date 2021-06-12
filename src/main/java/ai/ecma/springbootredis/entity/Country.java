@@ -4,16 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
+/**
+ * Author: Muhammad Mo'minov
+ * 08.06.2021
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Student {
+public class Country implements Serializable {
     @Id
     private Integer id;
+
     private String name;
-    private Integer age;
+
+    @Column(name = "nice_name")
+    private String niceName;
+
+    @Column(name = "phone_code")
+    private Integer phoneCode;
 }
