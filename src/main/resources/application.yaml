@@ -1,0 +1,29 @@
+server:
+  port: 9001
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root123
+  main:
+    banner-mode: off
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  cache:
+    type: redis
+  sql:
+    init:
+      mode: never
+  redis:
+    host: localhost
+    port: 6379
+#    password: 13205
+    timeout: 6000
+    ssl: false
+    jedis:
+      pool:
+        max-wait: 6000
