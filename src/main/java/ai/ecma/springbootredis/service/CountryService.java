@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 public class CountryService {
     final CountryRepository countryRepository;
 
-    @Cacheable(value = "students" /*, key = "#id" , sync = true, condition = "#id <= 100", unless = "#result.id != 1"*/)
+    @Cacheable(value = "country" /*, key = "#id" , sync = true, condition = "#id <= 100", unless = "#result.id != 1"*/)
     public ApiResponse getOne(int id) {
         sleep();
         return ApiResponse.success(countryRepository.findById(id).orElseGet(Country::new));
     }
 
-    @CachePut(value = "students", key = "#country.id")
+    @CachePut(value = "country", key = "#one.id")
     public ApiResponse update(Country country) {
         Country one = countryRepository.getOne(country.getId());
         one.setName(country.getName());
@@ -34,18 +34,18 @@ public class CountryService {
         return ApiResponse.success(countryRepository.save(one));
     }
 
-    @CachePut(value = "students", key = "#country.id")
+    @CachePut(value = "country", key = "#country.id")
     public ApiResponse save(Country country) {
         return ApiResponse.success(countryRepository.save(country));
     }
 
-    @CacheEvict(value = "students", key = "#id")
+    @CacheEvict(value = "country", key = "#id")
     public ApiResponse deleteOne(int id) {
         countryRepository.deleteById(id);
         return ApiResponse.success("Successfully deleted!");
     }
 
-    @CacheEvict(value = "students", allEntries = true)
+    @CacheEvict(value = "country", allEntries = true)
     public ApiResponse deleteAll() {
         countryRepository.deleteAll();
         return ApiResponse.success("Successfully deleted!");
