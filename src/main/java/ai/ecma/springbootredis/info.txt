@@ -1,15 +1,17 @@
 INFO - Keshlaydigan metod ishlatilmagan bo'lsa ham kesh yangilanishi mumkin.
 
-@Cacheable — when method annotated with this annotation, it will be executed only once for the given cachekey, until the cache expires or gets cleared.
 @CacheConfig — you can define some of the cache configuration in one place — at the class level — so that you won’t need to declare stuff several times.
-@CacheEvict — removes data from from the cache. You can use in different ways
-@CacheEvict(allEntries = true) — if you want to flush all the cache
-@CacheEvict(key = "#user.username") — or remove item by key
+@Cacheable — when method annotated with this annotation, it will be executed only once for the given cachekey, until the cache expires or gets cleared.
+@CacheEvict — removes data from the cache. You can use in different ways (by key or all)
+@Caching - Yuqoridagilarni birgalikda ishlatishingiz mumkin
 
 Annotation params:
+    String  cacheNames/values       - Kesh nomi
+    Object  id                      - Maxsus kalit (key)
+    Object  result                  - Response
     boolean beforeInvocation        - Amal oldin bajarilsinmi?
     boolean allEntries              - Amal barchasi uchunmi
-    boolean sync                    - agar true bolsa Atributi bir xil va bir vaqtda kelgan multiple so'rovlar uchun kod bir martta ishlash uchun
+    boolean sync                    - agar true bolsa bir xil Multiple Thread so'rovida kod bir artta ishlaydi
     String  key                     - Key controllerga kelgan user'ning id'siga teng
     String  cacheManager            - Cache manager bean nomi
     String  condition               - Amalni bajarish uchun shart
