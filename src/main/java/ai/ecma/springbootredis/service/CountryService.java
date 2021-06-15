@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 public class CountryService {
     final CountryRepository countryRepository;
 
-    @Cacheable(value = "country" /*, key = "#id" , sync = true, condition = "#id <= 100", unless = "#result.id != 1"*/)
+    @Cacheable(value = "country" , key = "#id" /* ,sync = true, condition = "#id <= 100", unless = "#result.id != 1"*/)
     public ApiResponse getOne(int id) {
         sleep();
         return ApiResponse.success(countryRepository.findById(id).orElseGet(Country::new));
     }
 
-    @CachePut(value = "country", key = "#one.id")
+    @CachePut(value = "country", key = "#country.id")
     public ApiResponse update(Country country) {
         Country one = countryRepository.getOne(country.getId());
         one.setName(country.getName());

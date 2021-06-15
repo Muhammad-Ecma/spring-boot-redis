@@ -4,6 +4,8 @@ import ai.ecma.springbootredis.entity.Country;
 import ai.ecma.springbootredis.model.ApiResponse;
 import ai.ecma.springbootredis.service.CountryService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
