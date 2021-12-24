@@ -4,8 +4,6 @@ import ai.ecma.springbootredis.entity.Country;
 import ai.ecma.springbootredis.model.ApiResponse;
 import ai.ecma.springbootredis.service.CountryService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,23 +19,23 @@ public class CountryController {
     final CountryService countryService;
 
     @GetMapping("/{id}")
-    public HttpEntity<?> getOne(@PathVariable int id){
+    public HttpEntity<?> getOne(@PathVariable int id) {
         ApiResponse response = countryService.getOne(id);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping
-    public HttpEntity<?> edit(@RequestBody Country country){
+    public HttpEntity<?> edit(@RequestBody Country country) {
         return ResponseEntity.ok(countryService.update(country));
     }
 
     @DeleteMapping("/{id}")
-    public HttpEntity<?> deleteOne(@PathVariable int id){
+    public HttpEntity<?> deleteOne(@PathVariable int id) {
         return ResponseEntity.ok(countryService.deleteOne(id));
     }
 
     @DeleteMapping("/all")
-    public HttpEntity<?> deleteAll(){
+    public HttpEntity<?> deleteAll() {
         return ResponseEntity.ok(countryService.deleteAll());
     }
 }

@@ -18,27 +18,27 @@ public class ApiResponse implements Serializable {
     String message;
     Object object;
 
-    public static ApiResponse success(String message){
+    public static ApiResponse success(String message) {
         return new ApiResponse(true, message, new Object());
     }
 
-    public static ApiResponse success(Object object){
+    public static ApiResponse success(Object object) {
         return new ApiResponse(true, "", object);
     }
 
-    public static ApiResponse success(String message, Object object){
+    public static ApiResponse success(String message, Object object) {
         return new ApiResponse(true, message, object);
     }
 
-    public static ApiResponse error(String message){
+    public static ApiResponse error(String message) {
         return new ApiResponse(false, message, new Object());
     }
 
-    public static ApiResponse error(Object object){
+    public static ApiResponse error(Object object) {
         return new ApiResponse(false, "", object);
     }
 
-    public static ApiResponse error(String message, Object object){
+    public static ApiResponse error(String message, Object object) {
         return new ApiResponse(false, message, object);
     }
 
