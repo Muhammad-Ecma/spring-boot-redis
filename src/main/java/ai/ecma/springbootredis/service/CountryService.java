@@ -19,9 +19,10 @@ import org.springframework.stereotype.Service;
 public class CountryService {
     final CountryRepository countryRepository;
 
-    @Cacheable(value = "country" , key = "#id" /* ,sync = true, condition = "#id <= 100", unless = "#result.id != 1"*/)
+    @Cacheable(value = "country" , key = "#id"  ,sync = true /*, condition = "#id <= 100", unless = "#result.id != 1"*/)
     public ApiResponse getOne(int id) {
         sleep();
+        System.err.println("Get from DB.....");
         return ApiResponse.success(countryRepository.findById(id).orElseGet(Country::new));
     }
 
