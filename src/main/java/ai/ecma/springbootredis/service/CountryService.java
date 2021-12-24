@@ -4,9 +4,11 @@ import ai.ecma.springbootredis.entity.Country;
 import ai.ecma.springbootredis.model.ApiResponse;
 import ai.ecma.springbootredis.repository.CountryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.stereotype.Service;
 
 
@@ -16,10 +18,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
+@CacheConfig(cacheNames = "country", cacheManager = "countryCacheManager")
 public class CountryService {
     final CountryRepository countryRepository;
 
-    @Cacheable(value = "country" , key = "#id"  ,sync = true /*, condition = "#id <= 100", unless = "#result.id != 1"*/)
+    @Cacheable(value = "country", key = "#id", sync = true /*, condition = "#id <= 100", unless = "#result.id != 1"*/)
+    @TimeToLive()
     public ApiResponse getOne(int id) {
         sleep();
         System.err.println("Get from DB.....");

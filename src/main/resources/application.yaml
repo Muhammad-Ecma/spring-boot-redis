@@ -19,12 +19,12 @@ spring:
   cache:
     type: redis
     cache-names: "country,student"
-    redis:
-      time-to-live: 60000
-      cache-null-values: true
-      key-prefix: cache_
-      use-key-prefix: true
-      enable-statistics: true
+#    redis:
+#      cache-null-values: true
+#      key-prefix: cache_
+#      use-key-prefix: true
+#      enable-statistics: true
+#      time-to-live: 1
   redis:
     host: localhost
     port: 6379
