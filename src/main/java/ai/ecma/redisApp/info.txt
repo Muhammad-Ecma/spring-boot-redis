@@ -11,7 +11,7 @@ Annotation params:
     Object  result                  - Response
     boolean beforeInvocation        - Amal oldin bajarilsinmi?
     boolean allEntries              - Amal barchasi uchunmi
-    boolean sync                    - agar true bolsa bir xil Multiple Thread so'rovida kod bir artta ishlaydi
+    boolean sync                    - agar true bolsa bir xil Multiple Thread so'rovida kod bir martta ishlaydi
     String  key                     - Key controllerga kelgan user'ning id'siga teng
     String  cacheManager            - Cache manager bean nomi
     String  condition               - Amalni bajarish uchun shart

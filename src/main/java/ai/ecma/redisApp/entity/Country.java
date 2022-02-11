@@ -1,12 +1,10 @@
-package ai.ecma.springbootredis.entity;
+package ai.ecma.redisApp.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -19,8 +17,10 @@ import java.io.Serializable;
 @Entity
 public class Country implements Serializable {
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "nice_name")

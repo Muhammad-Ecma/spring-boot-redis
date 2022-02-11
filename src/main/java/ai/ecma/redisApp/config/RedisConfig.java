@@ -1,5 +1,6 @@
-package ai.ecma.springbootredis.config;
+package ai.ecma.redisApp.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.EnableCaching;
@@ -26,10 +27,10 @@ import java.time.Duration;
  */
 @Configuration
 @EnableCaching
+@RequiredArgsConstructor
 public class RedisConfig {
 
-    @Autowired
-    private RedisProperties redisProperties;
+    private final RedisProperties redisProperties;
 
     @Bean
     public LettuceConnectionFactory lettuceConnectionFactory() {
@@ -57,7 +58,7 @@ public class RedisConfig {
 
     @Bean(name = "countryCacheManager")
     @Primary
-    public RedisCacheManager userCacheManager(final RedisConnectionFactory connectionFactory) {
+    public RedisCacheManager countryCacheManager(final RedisConnectionFactory connectionFactory) {
         final RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(connectionFactory);
         final RedisSerializationContext.SerializationPair<Object> valueSerializationPair = RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer());
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
