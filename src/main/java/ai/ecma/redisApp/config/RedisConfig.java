@@ -1,7 +1,10 @@
 package ai.ecma.redisApp.config;
 
+import io.lettuce.core.ClientOptions;
+import io.lettuce.core.SocketOptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +15,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -29,17 +33,6 @@ import java.time.Duration;
 @EnableCaching
 @RequiredArgsConstructor
 public class RedisConfig {
-
-    private final RedisProperties redisProperties;
-
-    @Bean
-    public LettuceConnectionFactory lettuceConnectionFactory() {
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName(redisProperties.getHost());
-        configuration.setPort(redisProperties.getPort());
-        return new LettuceConnectionFactory(configuration);
-    }
-
     @Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisSerializer<Object> genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
@@ -57,13 +50,27 @@ public class RedisConfig {
     }
 
     @Bean(name = "countryCacheManager")
+    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig() //
+                .prefixCacheNameWith("cache_education_") //
+                .entryTtl(Duration.ofHours(1)) //
+                .disableCachingNullValues();
+
+        return RedisCacheManager.builder(connectionFactory) //
+                .cacheDefaults(config) //
+                .build();
+    }
+
     @Primary
-    public RedisCacheManager countryCacheManager(final RedisConnectionFactory connectionFactory) {
+    @Bean(name = "defaultCacheManager")
+    public RedisCacheManager defaultCacheManager(final RedisConnectionFactory connectionFactory) {
         final RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(connectionFactory);
-        final RedisSerializationContext.SerializationPair<Object> valueSerializationPair = RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer());
+//        final RedisSerializationContext.SerializationPair<Object> valueSerializationPair = RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer());
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
         cacheConfiguration = cacheConfiguration.entryTtl(Duration.ofMinutes(15));
         final RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter, cacheConfiguration);
+
         return redisCacheManager;
     }
+
 }

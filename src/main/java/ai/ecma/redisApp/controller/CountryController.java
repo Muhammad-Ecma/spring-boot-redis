@@ -6,6 +6,8 @@ import ai.ecma.redisApp.service.CountryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Muhammad Mo'minov
  * 08.06.2021
@@ -14,7 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/country")
 @AllArgsConstructor
 public class CountryController {
-    final CountryService countryService;
+    private final CountryService countryService;
+
+    @GetMapping
+    public ApiResult<List<Country>> getAll() {
+        List<Country> countryList = countryService.getAll();
+        return ApiResult.successResponse(countryList);
+    }
 
     @GetMapping("/{id}")
     public ApiResult<Country> getById(@PathVariable Long id) {

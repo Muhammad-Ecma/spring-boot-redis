@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * Author: Muhammad Mo'minov
@@ -20,6 +22,12 @@ import org.springframework.stereotype.Service;
 @CacheConfig(cacheNames = "country", cacheManager = "countryCacheManager")
 public class CountryService {
     private final CountryRepository countryRepository;
+
+    @Cacheable(value = "countries")
+    public List<Country> getAll() {
+        System.out.println("Get from DB.....");
+        return countryRepository.findAll();
+    }
 
     @Cacheable(key = "#id", sync = true /*, condition = "#id <= 100", unless = "#result.id != 1"*/)
     public Country getById(Long id) {
@@ -60,7 +68,7 @@ public class CountryService {
 
     public void sleep() {
         try {
-            System.err.println("I am sleeping..........");
+            System.err.println("I'm sleeping..........");
             Thread.sleep(4000);
         } catch (Exception e) {
             e.printStackTrace();

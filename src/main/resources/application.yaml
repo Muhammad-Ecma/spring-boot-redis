@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         connection:
@@ -19,25 +19,14 @@ spring:
           import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
   sql:
     init:
-      mode: always
+      mode: never
   cache:
     type: redis
-    cache-names: "country"
-    redis:
-      cache-null-values: true
-      key-prefix: cache_
-      use-key-prefix: true
-      enable-statistics: true
-      time-to-live: 1
   redis:
     host: localhost
     port: 6379
-#    password: 13205
     timeout: 1000
-    ssl: false
-    lettuce:
-      pool:
-        max-wait: 1000
-        max-active: 1000
+#    username:
+#    password: 13205
 
 # https://github.com/microsoftarchive/redis/releases
